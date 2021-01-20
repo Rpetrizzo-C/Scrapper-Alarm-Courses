@@ -24,7 +24,7 @@ class content:
     def trigger(self):
         while True:
             self.check_status()
-            if self.quantity != 19:
+            if self.quantity != 19: #19 es la cantidad de coursos al momento de iniciar el script
                 message_obj.send_message(self.quantity, self.title)
             else:
                 print("La cantidad no cambio")
