@@ -10,7 +10,7 @@ class Start:
         while True:
             get_info = GetInfo()
             get_info.check_status()
-            if content.quantity != 19: #19 es la cantidad de coursos al momento de iniciar el script
+            if content.quantity != 30: #es la cantidad de coursos al momento de iniciar el script
                 whatsapp_message = WhatsappMessage()
                 whatsapp_message.send_message()
             else:
@@ -47,12 +47,12 @@ class Time:
 
     def transform_time(self,current_hour,current_minute):
         if current_minute == 59:
-            sending_minute = 0
-            sending_hour = current_hour + 1
+            self.sending_minute = 0
+            self.sending_hour = current_hour + 1
         else:
-            sending_minute = current_minute + 1 
-            sending_hour = current_hour
-        return sending_hour,sending_minute   
+            self.sending_minute = current_minute + 2 
+            self.sending_hour = current_hour
+       
         
 class WhatsappMessage:
     def __init__(self):
@@ -60,8 +60,8 @@ class WhatsappMessage:
 
     def send_message(self):
         time = Time()
-        sending_hour,sending_minute  = time.get_time()
-        kit.sendwhatmsg(self.number,"Cambio la cantidad de cursos https://allcoursefree.com/",sending_hour,sending_minute )
+        time.get_time()
+        kit.sendwhatmsg(self.number,"Cambio la cantidad de cursos https://allcoursefree.com/",time.sending_hour,time.sending_minute )
         print("Mensaje Enviado")   
                 
 content = Content()
