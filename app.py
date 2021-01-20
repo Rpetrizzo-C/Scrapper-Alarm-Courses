@@ -43,15 +43,16 @@ class Time:
         current = datetime.now().strftime("%H:%M:%S")
         self.current_hour = int(current[0:2])
         self.current_minute = int(current[3:5])
-        self.transform_time()
+        self.transform_time(self.current_hour,self.current_minute)
 
-    def transform_time(self):
-        if self.current_minute == 59:
-            self.current_minute = 0
-            self.current_hour += 1
+    def transform_time(self,current_hour,current_minute):
+        if current_minute == 59:
+            sending_minute = 0
+            sending_hour = current_hour + 1
         else:
-            self.current_minute +=2 
-        return self.current_hour,self.current_minute    
+            sending_minute = current_minute + 1 
+            sending_hour = current_hour
+        return sending_hour,sending_minute   
         
 class WhatsappMessage:
     def __init__(self):
@@ -59,8 +60,8 @@ class WhatsappMessage:
 
     def send_message(self):
         time = Time()
-        time.get_time()
-        kit.sendwhatmsg(self.number,"Cambio la cantidad de cursos https://allcoursefree.com/",time.current_hour,time.current_minute)
+        sending_hour,sending_minute  = time.get_time()
+        kit.sendwhatmsg(self.number,"Cambio la cantidad de cursos https://allcoursefree.com/",sending_hour,sending_minute )
         print("Mensaje Enviado")   
                 
 content = Content()
