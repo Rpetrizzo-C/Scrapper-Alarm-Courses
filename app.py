@@ -8,9 +8,11 @@ class Start:
 
     def trigger(self):
         while True:
-            GetInfo.check_status()
-            if self.quantity != 19: #19 es la cantidad de coursos al momento de iniciar el script
-                WhatsappMessage.send_message()
+            get_info = GetInfo()
+            get_info.check_status()
+            if content.quantity != 19: #19 es la cantidad de coursos al momento de iniciar el script
+                whatsapp_message = WhatsappMessage()
+                whatsapp_message.send_message()
             else:
                 print("La cantidad no cambio")
                 time.sleep(3600)
@@ -23,10 +25,11 @@ class GetInfo:
         self.page = requests.get(self.URL, headers = self.headers)
     
     def check_status(self):
-        soup = BeautifulSoup(self.page.content, 'html.parser')
+        
+        soup = BeautifulSoup(self.page.text, 'html.parser')
         title = soup.find('h1', attrs={"class":'site-title'}).get_text()
         courses = soup.find('p', attrs={"class":'woocommerce-result-count'}).get_text()
-        self.content.content(courses)
+        content.content(courses)
 
 class Content:
 
@@ -55,8 +58,9 @@ class WhatsappMessage:
         self.number = "+541136646178"
 
     def send_message(self):
-        Time.get_time()
-        kit.sendwhatmsg(self.number,"Cambio la cantidad de cursos https://allcoursefree.com/",self.current_hour,self.current_minute)
+        time = Time()
+        time.get_time()
+        kit.sendwhatmsg(self.number,"Cambio la cantidad de cursos https://allcoursefree.com/",time.current_hour,time.current_minute)
         print("Mensaje Enviado")   
                 
 content = Content()
