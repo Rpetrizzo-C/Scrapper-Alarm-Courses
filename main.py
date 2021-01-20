@@ -1,8 +1,10 @@
-from app import content
+from app import Start
 
 
 if __name__ == "__main__":
-    content.trigger()
+    start = Start()
+    
+    start.trigger()
        
         
 
